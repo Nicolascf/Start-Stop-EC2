@@ -26,6 +26,7 @@
                 };
     
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
+                    mode: 'no-cors',
                     method: 'POST', // Método POST
                     headers: {
                         'Content-Type': 'application/json' // Tipo de conteúdo como JSON
