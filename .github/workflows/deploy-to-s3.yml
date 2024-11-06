@@ -6,6 +6,7 @@ on:
       - develop
     paths:
       - 'index.html'
+      - 'deploy-to-s3.yml'
 
 jobs:
   deploy:
@@ -17,7 +18,7 @@ jobs:
 
       # Etapa para enviar o arquivo index.html ao bucket S3
       - name: Upload to S3
-        uses: aws-actions/s3-sync-action@v0.5.1
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
