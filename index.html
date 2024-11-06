@@ -1,59 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control EC2 Instance</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        button {
-            font-size: 16px;
-            padding: 10px 20px;
-            margin: 20px;
-            cursor: pointer;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        button { font-size: 16px; padding: 10px 20px; margin: 20px; cursor: pointer; }
     </style>
 </head>
-
 <body>
-    
     <h1>EC2 Instance Control Panel</h1>
     <button onclick="startInstance()">Start EC2 Instance</button>
     <button onclick="stopInstance()">Stop EC2 Instance</button>
 
     <script>
-        instance_id = body.get('instance_id')
         async function startInstance() {
             try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        instance_id: 'i-06dda82c3d0375c9c'
-                    })
+                const response = await fetch('YOUR_LAMBDA_START_ENDPOINT', {
+                    method: 'POST'
                 });
-                if (response.ok) {
-                    alert('Start request sent successfully!');
-                } else {
-                    alert('Failed to send start request');
-                }
+                alert('Start request sent!');
             } catch (error) {
                 console.error('Error starting instance:', error);
             }
         }
 
-
         async function stopInstance() {
             try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance', {
+                const response = await fetch('YOUR_LAMBDA_STOP_ENDPOINT', {
                     method: 'POST'
                 });
                 alert('Stop request sent!');
@@ -63,7 +38,4 @@
         }
     </script>
 </body>
-
 </html>
-
-<p>teste</p>
