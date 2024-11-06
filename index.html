@@ -22,11 +22,13 @@
 </head>
 
 <body>
+    
     <h1>EC2 Instance Control Panel</h1>
     <button onclick="startInstance()">Start EC2 Instance</button>
     <button onclick="stopInstance()">Stop EC2 Instance</button>
 
     <script>
+        instance_id = body.get('instance_id')
         async function startInstance() {
             try {
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
