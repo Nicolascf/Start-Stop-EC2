@@ -21,7 +21,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          bucket: web-page-labda
+          bucket: web-page-lambda
           region: us-east-1
           source-dir: .  # A raiz do repositório
           destination-dir: /  # Caminho no bucket S3
