@@ -15,7 +15,9 @@
     <button onclick="stopInstance()">Stop EC2 Instance</button>
 
     <script>
-        async function startInstance() {
+        const instance_id = body.instance_id;
+
+        async function startInstance(instance_id) {
             try {
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
                     method: 'POST'
@@ -26,7 +28,7 @@
             }
         }
 
-        async function stopInstance() {
+        async function stopInstance(instance_id) {
             try {
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance', {
                     method: 'POST'
