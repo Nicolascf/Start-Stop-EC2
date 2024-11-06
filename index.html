@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control EC2 Instance</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        button { font-size: 16px; padding: 10px 20px; margin: 20px; cursor: pointer; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <h1>EC2 Instance Control Panel</h1>
     <button onclick="startInstance()">Start EC2 Instance</button>
@@ -18,13 +30,24 @@
         async function startInstance() {
             try {
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
-                    method: 'POST'
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        instance_id: 'i-06dda82c3d0375c9c'
+                    })
                 });
-                alert('Start request sent!');
+                if (response.ok) {
+                    alert('Start request sent successfully!');
+                } else {
+                    alert('Failed to send start request');
+                }
             } catch (error) {
                 console.error('Error starting instance:', error);
             }
         }
+
 
         async function stopInstance() {
             try {
@@ -38,6 +61,7 @@
         }
     </script>
 </body>
+
 </html>
 
 <p>teste</p>
