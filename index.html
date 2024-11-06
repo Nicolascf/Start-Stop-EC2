@@ -15,13 +15,28 @@
     <button onclick="stopInstance()">Stop EC2 Instance</button>
 
     <script>
-        const instance_id = body.instance_id;
-
+        // Presumindo que body seja uma variável definida anteriormente contendo o instance_id
+        const instance_id = "seu_instance_id_aqui"; // ou body.instance_id, conforme suas necessidades
+    
         async function startInstance() {
             try {
+                // Criando o corpo da requisição
+                const requestBody = {
+                    instance_id: instance_id
+                };
+    
                 const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
-                    method: 'POST'
+                    method: 'POST', // Método POST
+                    headers: {
+                        'Content-Type': 'application/json' // Tipo de conteúdo como JSON
+                    },
+                    body: JSON.stringify(requestBody) // Convertendo o corpo em JSON
                 });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
                 alert('Start request sent!');
             } catch (error) {
                 console.error('Error starting instance:', error);
