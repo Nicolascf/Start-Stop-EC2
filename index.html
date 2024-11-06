@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +15,9 @@
     <button onclick="stopInstance()">Stop EC2 Instance</button>
 
     <script>
-        const instance_id = body.instance_id;
-
         async function startInstance() {
             try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
+                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance/', {
                     method: 'POST'
                 });
                 alert('Start request sent!');
@@ -30,7 +28,7 @@
 
         async function stopInstance() {
             try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance', {
+                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance/', {
                     method: 'POST'
                 });
                 alert('Stop request sent!');
