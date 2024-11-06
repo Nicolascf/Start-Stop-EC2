@@ -1,0 +1,40 @@
+name: Deploy to S3 and Trigger ArgoCD Sync
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'index.html'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Etapa para enviar o arquivo index.html ao bucket S3
+      - name: Upload to S3
+        uses: aws-actions/s3-sync-action@v0.5.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          bucket: web-page-labda
+          region: us-east-1
+          source-dir: .  # A raiz do repositório
+          destination-dir: /  # Caminho no bucket S3
+
+      # Etapa para sincronizar a aplicação no Argo CD
+   #   - name: Sync ArgoCD Application
+   #     env:
+   #       ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+   #       ARGOCD_AUTH_TOKEN: ${{ secrets.ARGOCD_AUTH_TOKEN }}
+   #     run: |
+   #       # Instala a CLI do ArgoCD
+   #       curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+   #       chmod +x /usr/local/bin/argocd
+   #       
+   #       # Sincroniza a aplicação no Argo CD
+   #       argocd app sync your-application-name --server $ARGOCD_SERVER --auth-token $ARGOCD_AUTH_TOKEN
