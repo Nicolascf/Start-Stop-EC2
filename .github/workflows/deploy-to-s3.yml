@@ -6,7 +6,6 @@ on:
       - develop
     paths:
       - 'index.html'
-      - 'deploy-to-s3.yml'
 
 jobs:
   deploy:
@@ -28,7 +27,7 @@ jobs:
       # 3. Upload ao bucket S3 usando AWS CLI
       - name: Upload to S3
         run: |
-          aws s3 sync . s3://web-page-lambda --region us-east-1
+          aws s3 cp index.html s3://web-page-lambda/index.html --region us-east-1
 
 
       # Etapa para sincronizar a aplicação no Argo CD
