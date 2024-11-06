@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control EC2 Instance</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        button { font-size: 16px; padding: 10px 20px; margin: 20px; cursor: pointer; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start/Stop EC2</title>
 </head>
 <body>
-    <h1>EC2 Instance Control Panel</h1>
-    <button onclick="startInstance()">Start EC2 Instance</button>
-    <button onclick="stopInstance()">Stop EC2 Instance</button>
 
-    <script>
-        async function startInstance() {
-            try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance', {
-                    method: 'POST'
-                });
-                alert('Start request sent!');
-            } catch (error) {
-                console.error('Error starting instance:', error);
-            }
-        }
+  <button id="start-btn">Start EC2 Instance</button>
+  <button id="stop-btn">Stop EC2 Instance</button>
 
-        async function stopInstance() {
-            try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance', {
-                    method: 'POST'
-                });
-                alert('Stop request sent!');
-            } catch (error) {
-                console.error('Error stopping instance:', error);
-            }
-        }
-    </script>
+  <script>
+    // ID da instância, você pode obter isso via JavaScript dinâmico, mas aqui é um exemplo fixo
+    const instanceId = "i-06dda82c3d0375c9c";  // Substitua com o seu instance_id real
+
+    document.getElementById("start-btn").addEventListener("click", function() {
+      sendPostRequest("start");
+    });
+
+    document.getElementById("stop-btn").addEventListener("click", function() {
+      sendPostRequest("stop");
+    });
+
+    function sendPostRequest(action) {
+      const url = `https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/`;  // Substitua com o endpoint da sua Lambda
+      const payload = {
+        instance_id: instanceId,
+        action: action // 'start' ou 'stop'
+      };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    }
+  </script>
+
 </body>
 </html>
-
-<p>teste</p>
