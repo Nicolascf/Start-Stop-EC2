@@ -1,40 +1,49 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control EC2 Instance</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        button { font-size: 16px; padding: 10px 20px; margin: 20px; cursor: pointer; }
-    </style>
+    <title>Controle de Instância EC2</title>
 </head>
 <body>
-    <h1>EC2 Instance Control Panel</h1>
-    <button onclick="startInstance()">Start EC2 Instance</button>
-    <button onclick="stopInstance()">Stop EC2 Instance</button>
+    <h1>Controle de Instância EC2</h1>
+    <button onclick="startInstance()">Iniciar Instância</button>
+    <button onclick="stopInstance()">Parar Instância</button>
 
     <script>
-        async function startInstance() {
-            try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance/', {
-                    method: 'POST'
-                });
-                alert('Start request sent!');
-            } catch (error) {
-                console.error('Error starting instance:', error);
-            }
+        // URLs das suas Lambdas (substitua com os endpoints do API Gateway)
+        const START_INSTANCE_URL = "https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/start-instance";
+        const STOP_INSTANCE_URL = "https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance";
+        
+        // ID da sua instância EC2
+        const INSTANCE_ID = "i-06dda82c3d0375c9c"; // Substitua pelo ID real
+
+        // Função para iniciar a instância
+        function startInstance() {
+            fetch(START_INSTANCE_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ instance_id: INSTANCE_ID })
+            })
+            .then(response => response.json())
+            .then(data => alert("Instância iniciada: " + JSON.stringify(data)))
+            .catch(error => console.error("Erro ao iniciar a instância:", error));
         }
 
-        async function stopInstance() {
-            try {
-                const response = await fetch('https://wo8eenlz55.execute-api.us-east-1.amazonaws.com/dev/stop-instance/', {
-                    method: 'POST'
-                });
-                alert('Stop request sent!');
-            } catch (error) {
-                console.error('Error stopping instance:', error);
-            }
+        // Função para parar a instância
+        function stopInstance() {
+            fetch(STOP_INSTANCE_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ instance_id: INSTANCE_ID })
+            })
+            .then(response => response.json())
+            .then(data => alert("Instância parada: " + JSON.stringify(data)))
+            .catch(error => console.error("Erro ao parar a instância:", error));
         }
     </script>
 </body>
