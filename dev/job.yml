@@ -10,7 +10,7 @@ spec:
         image: amazon/aws-cli:latest
         command: ["/bin/sh", "-c"]
         args:
-          - aws s3 sync /workspace/ s3://web-page-lambda --delete;
+          - aws s3 cp /workspace/index.html s3://web-page-lambda/index.html;
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
